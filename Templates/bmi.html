@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BMI Calculator</title>
+  <!-- Link to the SAME CSS file -->
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+  />
+</head>
+<body>
+  <!-- Header with ALL links fixed -->
+  <header>
+    <a href="{{ url_for('home') }}" class="logo">InsurePredict</a>
+    <nav>
+      <a href="{{ url_for('bmi') }}">Calculate BMI</a>
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('signup') }}">Sign Up</a>
+    </nav>
+  </header>
+
+  <!-- Main container -->
+  <div class="main-wrapper">
+    <!-- 1. Left Side: Content -->
+    <div class="content-side">
+      <h1>BMI Calculator</h1>
+      <p>
+        Use our simple tool to calculate your Body Mass Index (BMI). Knowing
+        your BMI can help you understand your health and insurance risks.
+      </p>
+    </div>
+
+    <!-- 2. Right Side: Form -->
+    <div class="form-side">
+      <div class="container">
+        <h2>Calculate Your BMI</h2>
+
+        <form id="bmi-form">
+          <!-- Floating Label Group -->
+          <div class="form-group">
+            <input
+              type="number"
+              name="height"
+              id="height"
+              placeholder=" "
+              required
+            />
+            <label for="height">Height (in cm)</label>
+          </div>
+
+          <!-- Floating Label Group -->
+          <div class="form-group">
+            <input
+              type="number"
+              name="weight"
+              id="weight"
+              placeholder=" "
+              required
+            />
+            <label for="weight">Weight (in kg)</label>
+          </div>
+
+          <button type="submit">Calculate BMI</button>
+        </form>
+
+        <!-- Styled Result Area -->
+        <div class="result-display" id="bmi-result-container">
+          <h2 id="bmi-value"></h2>
+          <p id="bmi-category"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2025 InsurePredict. All rights reserved.</p>
+  </footer>
+
+  <!-- JAVASCRIPT for BMI Calculation -->
+  <script>
+    document
+      .getElementById("bmi-form")
+      .addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevent the form from submitting
+
+        // Get values
+        const height = parseFloat(document.getElementById("height").value);
+        const weight = parseFloat(document.getElementById("weight").value);
+        const resultContainer = document.getElementById(
+          "bmi-result-container"
+        );
+        const bmiValueEl = document.getElementById("bmi-value");
+        const bmiCategoryEl = document.getElementById("bmi-category");
+
+        if (height > 0 && weight > 0) {
+          // Calculate BMI (weight / (height_in_meters ^ 2))
+          const heightInMeters = height / 100;
+          const bmi = (weight / (heightInMeters * heightInMeters)).toFixed(1);
+
+          // Determine category
+          let category = "";
+          if (bmi < 18.5) {
+            category = "Underweight";
+          } else if (bmi < 24.9) {
+            category = "Normal weight";
+          } else if (bmi < 29.9) {
+            category = "Overweight";
+          } else {
+            category = "Obesity";
+          }
+
+          // Display result
+          bmiValueEl.textContent = `Your BMI is ${bmi}`;
+          bmiCategoryEl.textContent = `Category: ${category}`;
+          resultContainer.style.opacity = 1; // Make it visible
+        } else {
+          bmiValueEl.textContent = "Please enter valid numbers";
+          bmiCategoryEl.textContent = "";
+          resultContainer.style.opacity = 1;
+        }
+      });
+  </script>
+</body>
+</html>
+

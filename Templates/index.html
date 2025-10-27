@@ -1,0 +1,1043 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insurance Charges Prediction</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background: #f7f8fa;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: #fff;
+      width: 100%;
+      max-width: 480px;
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+      display: block;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 2px #e0e7ff;
+    }
+
+    button {
+      padding: 12px;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: 0.3s;
+      width: 100%;
+    }
+
+    button:hover {
+      background: #4338ca;
+    }
+
+    .link {
+      text-align: center;
+      margin-top: -5px;
+      font-size: 14px;
+    }
+
+    .link a {
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Insurance Charges Prediction</h2>
+
+    <form action="/predict" method="post">
+      <div>
+        <label for="age">Age:</label>
+        <input type="number" name="age" id="age" placeholder="Enter your age" required />
+      </div>
+
+      <div>
+        <label for="sex">Sex:</label>
+        <select name="sex" id="sex" required>
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="bmi">BMI:</label>
+        <input type="number" name="bmi" id="bmi" placeholder="Enter your BMI" step="any" required />
+      </div>
+
+      <div class="link">
+        Don’t know your BMI? 👉 <a href="bmi.html">Calculate here</a>
+      </div>
+
+      <div>
+        <label for="children">Children:</label>
+        <input type="number" name="children" id="children" placeholder="Number of children" required />
+      </div>
+
+      <div>
+        <label for="smoker">Smoker:</label>
+        <select name="smoker" id="smoker" required>
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="region">Region:</label>
+        <select name="region" id="region" required>
+          <option value="">Select</option>
+          <option value="southwest">Southwest</option>
+          <option value="southeast">Southeast</option>
+          <option value="northwest">Northwest</option>
+          <option value="northeast">Northeast</option>
+        </select>
+      </div>
+      <button type="submit">Predict Charges</button>
+    </form>
+  </div>
+  <h2>{{y}}</h2>
+</body>
+</html> -->
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insurance Charges Prediction</title>
+  <style>
+    /* --- Base & Body Styles --- */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+      /* A smooth, dynamic gradient background */
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden; /* Prevents horizontal scroll during animations */
+    }
+
+    /* --- Main Layout Container --- */
+    .main-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Two-column layout */
+      width: 100%;
+      max-width: 1200px;
+      min-height: 90vh;
+      margin: 20px;
+      background: #ffffff;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+      overflow: hidden; /* Ensures content respects the border-radius */
+    }
+
+    /* --- 1. Content Side (The new content) --- */
+    .content-side {
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* Entry Animation: Slides in from the left */
+      opacity: 0;
+      animation: slideInLeft 1s ease-out forwards;
+      animation-delay: 0.2s;
+    }
+
+    .content-side h1 {
+      font-size: 48px;
+      color: #333;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .content-side p {
+      font-size: 18px;
+      color: #555;
+      line-height: 1.6;
+      max-width: 450px;
+    }
+
+    /* --- 2. Form Side --- */
+    .form-side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      /* Frosted glass effect with a fallback */
+      background: rgba(255, 255, 255, 0.6);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-left: 1px solid rgba(255, 255, 255, 0.3);
+      /* Entry Animation: Slides in from the right */
+      opacity: 0;
+      animation: slideInRight 1s ease-out forwards;
+      animation-delay: 0.2s;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-size: 32px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* This targets each form group (label + input) for animation */
+    form > div,
+    .link {
+      opacity: 0; /* Start hidden */
+      animation: fadeInSlideUp 0.6s ease-out forwards;
+    }
+
+    label {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 6px;
+      display: block;
+      color: #444;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      box-sizing: border-box; /* Crucial for responsive padding */
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 3px #e0e7ff;
+    }
+
+    button {
+      padding: 14px;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      animation: fadeInSlideUp 0.6s ease-out forwards;
+    }
+
+    button:hover {
+      background: #4338ca;
+      transform: translateY(-3px); /* Lifts the button */
+      box-shadow: 0 8px 15px rgba(79, 70, 229, 0.2);
+    }
+
+    .link {
+      text-align: center;
+      margin-top: -5px;
+      font-size: 14px;
+    }
+
+    .link a {
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+      color: #4338ca;
+    }
+
+    /* --- Prediction Result --- */
+    #prediction-result {
+      text-align: center;
+      margin-top: 25px;
+      opacity: 0;
+      animation: fadeInSlideUp 0.6s ease-out forwards;
+    }
+
+    #prediction-result h2 {
+      font-size: 24px;
+      color: #4f46e5;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* --- Staggered Animation Delays --- */
+    /* This creates the dynamic "waterfall" effect for the form */
+    form > div:nth-child(1) { animation-delay: 0.5s; }
+    form > div:nth-child(2) { animation-delay: 0.6s; }
+    form > div:nth-child(3) { animation-delay: 0.7s; }
+    .link { animation-delay: 0.8s; } /* The BMI link */
+    form > div:nth-child(5) { animation-delay: 0.9s; } /* Children */
+    form > div:nth-child(6) { animation-delay: 1.0s; } /* Smoker */
+    form > div:nth-child(7) { animation-delay: 1.1s; } /* Region */
+    button { animation-delay: 1.2s; }
+    #prediction-result { animation-delay: 1.3s; }
+
+    /* --- Keyframe Animations --- */
+    @keyframes slideInLeft {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeInSlideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* --- Responsive Design --- */
+    @media (max-width: 900px) {
+      .main-wrapper {
+        grid-template-columns: 1fr; /* Stack columns */
+        min-height: auto;
+        margin: 0;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      .content-side {
+        padding: 40px 20px;
+        text-align: center;
+      }
+
+      .content-side h1 {
+        font-size: 36px;
+      }
+
+      .content-side p {
+        font-size: 16px;
+        max-width: 100%;
+      }
+
+      .form-side {
+        border-left: none;
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <div class="content-side">
+      <h1>Predict Your Insurance Costs</h1>
+      <p>
+        Get an instant, AI-powered estimate of your yearly medical insurance
+        charges. Fill out the form to see how factors like age, BMI, and
+        lifestyle impact your premium.
+      </p>
+    </div>
+
+    <div class="form-side">
+      <div class="container">
+        <h2>Insurance Prediction</h2>
+
+        <form action="/predict" method="post">
+          <div>
+            <label for="age">Age:</label>
+            <input type="number" name="age" id="age" placeholder="Enter your age" required />
+          </div>
+
+          <div>
+            <label for="sex">Sex:</label>
+            <select name="sex" id="sex" required>
+              <option value="">Select</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="bmi">BMI:</label>
+            <input type="number" name="bmi" id="bmi" placeholder="Enter your BMI" step="any" required />
+          </div>
+
+          <div class="link">
+            Don’t know your BMI? 👉
+            <a href="bmi.html">Calculate here</a>
+          </div>
+
+          <div>
+            <label for="children">Children:</label>
+            <input type="number" name="children" id="children" placeholder="Number of children" required />
+          </div>
+
+          <div>
+            <label for="smoker">Smoker:</label>
+            <select name="smoker" id="smoker" required>
+              <option value="">Select</option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="region">Region:</label>
+            <select name="region" id="region" required>
+              <option value="">Select</option>
+              <option value="southwest">Southwest</option>
+              <option value="southeast">Southeast</option>
+              <option value="northwest">Northwest</option>
+              <option value="northeast">Northeast</option>
+            </select>
+          </div>
+          <button type="submit">Predict Charges</button>
+        </form>
+
+        <div id="prediction-result">
+          <h2>{{y}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html> -->
+
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insurance Charges Prediction</title>
+  <style>
+    /* --- Base & Body Styles --- */
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Helvetica, Arial, sans-serif;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden; /* Prevents horizontal scroll */
+
+      /* --- DYNAMIC GRADIENT BACKGROUND --- */
+      color: #fff;
+      background: linear-gradient(
+        135deg,
+        #667eea,
+        #764ba2,
+        #89f7fe,
+        #66a6ff
+      );
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+    }
+
+    /* --- Gradient Animation --- */
+    @keyframes gradientBG {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* --- Main Layout Container (NOW FULL SCREEN) --- */
+    .main-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Two-column layout */
+      width: 100vw; /* Full Viewport Width */
+      height: 100vh; /* Full Viewport Height */
+      overflow: hidden;
+    }
+
+    /* --- 1. Content Side --- */
+    .content-side {
+      padding: 60px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* Entry Animation: Slides in from the left */
+      opacity: 0;
+      animation: slideInLeft 1s ease-out forwards;
+      animation-delay: 0.2s;
+    }
+
+    .content-side h1 {
+      font-size: 52px;
+      color: #fff; /* White text on gradient */
+      margin-bottom: 20px;
+      line-height: 1.2;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .content-side p {
+      font-size: 20px;
+      color: #eee; /* Light text on gradient */
+      line-height: 1.6;
+      max-width: 480px;
+      text-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    /* --- 2. Form Side --- */
+    .form-side {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+      /* --- ENHANCED "FROSTED GLASS" EFFECT --- */
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-left: 1px solid rgba(255, 255, 255, 0.3);
+      /* Entry Animation: Slides in from the right */
+      opacity: 0;
+      animation: slideInRight 1s ease-out forwards;
+      animation-delay: 0.2s;
+      overflow-y: auto; /* Allows scrolling on small tall screens */
+    }
+
+    .container {
+      width: 100%;
+      max-width: 450px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333; /* Dark text on the light glass */
+      margin-bottom: 30px;
+      font-size: 32px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 25px; /* Increased gap for floating labels */
+    }
+
+    /* --- DYNAMIC FLOATING LABEL FIELDS --- */
+    .form-group {
+      position: relative;
+      opacity: 0; /* For cascade animation */
+      animation: fadeInSlideUp 0.6s ease-out forwards;
+    }
+
+    /* Style for the input/select boxes */
+    input,
+    select {
+      width: 100%;
+      padding: 12px 5px 8px 5px; /* Padding for floating label */
+      border: none;
+      background: transparent;
+      border-bottom: 2px solid #aaa;
+      font-size: 16px;
+      color: #333;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-bottom-color: #4f46e5;
+    }
+    
+    /* Remove default select arrow for a cleaner look */
+    select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%23444" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 5px center;
+      padding-right: 30px; /* Space for dropdown arrow */
+    }
+
+    /* Style for the floating labels */
+    label {
+      position: absolute;
+      top: 10px;
+      left: 5px;
+      font-size: 16px;
+      color: #666;
+      font-weight: 500;
+      pointer-events: none; /* Allows clicking through the label */
+      transition: all 0.3s ease;
+    }
+
+    /* The "float" animation */
+    /* Triggers when input is focused OR has valid content */
+    input:focus + label,
+    input:not(:placeholder-shown) + label,
+    select:focus + label,
+    select:valid + label {
+      top: -14px;
+      left: 0;
+      font-size: 12px;
+      color: #4f46e5;
+      font-weight: 600;
+    }
+    
+    /* Make the default select option invalid for :valid selector */
+    select option[value=""] {
+      color: #999;
+    }
+
+
+    button {
+      padding: 14px;
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      width: 100%;
+      transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
+      opacity: 0;
+      animation: fadeInSlideUp 0.6s ease-out forwards;
+    }
+
+    button:hover {
+      background: #4338ca;
+      transform: translateY(-3px); /* Lifts the button */
+      box-shadow: 0 8px 15px rgba(79, 70, 229, 0.3);
+    }
+
+    .link {
+      text-align: center;
+      margin-top: -10px; /* Tighter spacing */
+      font-size: 14px;
+      opacity: 0;
+      animation: fadeInSlideUp 0.6s ease-out forwards;
+      color: #444; /* Darker text for readability on glass */
+    }
+
+    .link a {
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .link a:hover {
+      text-decoration: underline;
+      color: #4338ca;
+    }
+
+    /* --- Prediction Result --- */
+    #prediction-result {
+      text-align: center;
+      margin-top: 25px;
+      opacity: 0;
+      animation: fadeInSlideUp 0.6s ease-out forwards;
+    }
+
+    #prediction-result h2 {
+      font-size: 24px;
+      color: #4f46e5;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    /* --- Staggered Animation Delays --- */
+    .form-group:nth-of-type(1) { animation-delay: 0.5s; }
+    .form-group:nth-of-type(2) { animation-delay: 0.6s; }
+    .form-group:nth-of-type(3) { animation-delay: 0.7s; }
+    .link { animation-delay: 0.8s; }
+    .form-group:nth-of-type(4) { animation-delay: 0.9s; }
+    .form-group:nth-of-type(5) { animation-delay: 1.0s; }
+    .form-group:nth-of-type(6) { animation-delay: 1.1s; }
+    button { animation-delay: 1.2s; }
+    #prediction-result { animation-delay: 1.3s; }
+
+    /* --- Keyframe Animations --- */
+    @keyframes slideInLeft {
+      from { transform: translateX(-50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes slideInRight {
+      from { transform: translateX(50px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeInSlideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* --- Responsive Design --- */
+    @media (max-width: 900px) {
+      .main-wrapper {
+        grid-template-columns: 1fr; /* Stack columns */
+        height: auto; /* Allow content to flow */
+        min-height: 100vh;
+      }
+
+      .content-side {
+        padding: 60px 30px;
+        text-align: center;
+        height: auto;
+      }
+
+      .content-side h1 {
+        font-size: 36px;
+      }
+
+      .content-side p {
+        font-size: 16px;
+        max-width: 100%;
+      }
+
+      .form-side {
+        border-left: none;
+        padding: 40px 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-wrapper">
+    <div class="content-side">
+      <h1>Predict Your Insurance Costs</h1>
+      <p>
+        Get an instant, AI-powered estimate of your yearly medical insurance
+        charges. Fill out the form to see how factors like age, BMI, and
+        lifestyle impact your premium.
+      </p>
+    </div>
+
+    <div class="form-side">
+      <div class="container">
+        <h2>Insurance Prediction</h2>
+
+        <form action="/predict" method="post">
+          <div class="form-group">
+            <input type="number" name="age" id="age" placeholder=" " required />
+            <label for="age">Age</label>
+          </div>
+
+          <div class="form-group">
+            <select name="sex" id="sex" required>
+              <option value="" disabled selected></option> <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <label for="sex">Sex</label>
+          </div>
+
+          <div class="form-group">
+            <input type="number" name="bmi" id="bmi" step="any" placeholder=" " required />
+            <label for="bmi">BMI</label>
+          </div>
+
+          <div class="link">
+            Don’t know your BMI? 👉
+            <a href="bmi.html">Calculate here</a>
+          </div>
+
+          <div class="form-group">
+            <input type="number" name="children" id="children" placeholder=" " required />
+            <label for="children">Children</label>
+          </div>
+
+          <div class="form-group">
+            <select name="smoker" id="smoker" required>
+              <option value="" disabled selected></option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <label for="smoker">Smoker</label>
+          </div>
+
+          <div class="form-group">
+            <select name="region" id="region" required>
+              <option value="" disabled selected></option>
+              <option value="southwest">Southwest</option>
+              <option value="southeast">Southeast</option>
+              <option value="northwest">Northwest</option>
+              <option value="northeast">Northeast</option>
+            </select>
+            <label for="region">Region</label>
+          </div>
+          <button type="submit">Predict Charges</button>
+        </form>
+
+        <div id="prediction-result">
+          <h2>{{y}}</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html> -->
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Insurance Charges Prediction</title>
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}"
+  />
+</head>
+<body>
+  <!-- UPDATED Header -->
+  <header>
+    <a href="{{ url_for('home') }}" class="logo">InsurePredict</a>
+    <nav>
+      <!-- NEW: Welcome message -->
+      {% if current_user.is_authenticated %}
+        <span style="color: #fff; font-weight: 600; margin-left: 30px;">
+          Welcome, {{ current_user.username }}!
+        </span>
+        <a href="{{ url_for('bmi') }}">Calculate BMI</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
+      {% else %}
+        <a href="{{ url_for('bmi') }}">Calculate BMI</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('signup') }}">Sign Up</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <!-- Main container -->
+  <div class="main-wrapper">
+    <!-- 1. Left Side: Content -->
+    <div class="content-side">
+      <!-- --- MOVED: Styled Prediction Result Area --- -->
+      <!-- This block is now above the h1 tag, as requested -->
+      <div class="result-display">
+        {% if y and suggested_plan %}
+          <!-- This h2 will be populated by the typing script -->
+          <h2 id="plan-title"></h2>
+
+          <!-- This card will be hidden and then faded in -->
+          <div class="plan-suggestion-card" id="plan-card">
+            <p>{{ suggested_plan.description }}</p>
+            <div class="plan-cost">
+              <span>Predicted Yearly Cost:</span>
+              <strong>{{ y }}</strong>
+            </div>
+            <button class="plan-button" type="button">
+              Learn More & Sign Up
+            </button>
+          </div>
+
+          <!-- --- NEW: JavaScript for Typing Effect --- -->
+          <script>
+            document.addEventListener("DOMContentLoaded", () => {
+              const titleEl = document.getElementById("plan-title");
+              const cardEl = document.getElementById("plan-card");
+
+              if (titleEl && cardEl) {
+                // Get the full text from the server-rendered variable
+                const fullText = `We Suggest the "{{ suggested_plan.name }}"`;
+
+                titleEl.innerText = ""; // Clear it
+                titleEl.style.opacity = 1; // Make it visible for the cursor
+                titleEl.classList.add("typing-effect"); // Add blinking cursor
+
+                let i = 0;
+                const typingSpeed = 150; // ms per character
+
+                const intervalId = setInterval(() => {
+                  if (i < fullText.length) {
+                    titleEl.innerText += fullText.charAt(i);
+                    i++;
+                  } else {
+                    // Typing finished
+                    clearInterval(intervalId);
+                    titleEl.classList.remove("typing-effect"); // Remove cursor
+
+                    // Fade in the card
+                    cardEl.style.opacity = 1;
+                  }
+                }, typingSpeed);
+              }
+            });
+          </script>
+        {% endif %}
+      </div>
+
+      <h1>Predict Your Insurance Costs</h1>
+
+      <p>
+        Get an instant, AI-powered estimate of your yearly medical insurance
+        charges. Fill out the form to see how factors like age, BMI, and
+        lifestyle impact your premium.
+      </S>
+    </div>
+
+    <!-- 2. Right Side: Form -->
+    <div class="form-side">
+      <div class="container">
+        <h2>Insurance Prediction</h2>
+
+        <form action="{{ url_for('predict') }}" method="post">
+          <!-- Floating Label Group -->
+          <div class="form-group">
+            <input type="number" name="age" id="age" placeholder=" " required />
+            <label for="age">Age</label>
+          </div>
+
+          <!-- Floating Label Group -->
+          <div class="form-group">
+            <select name="sex" id="sex" required>
+              <option value="" disabled selected></option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+            <label for="sex">Sex</label>
+          </div>
+
+          <!-- Floating Label Group -->
+          <div class="form-group">
+            <input
+              type="number"
+              name="bmi"
+              id="bmi"
+              step="any"
+              placeholder=" "
+              required
+            />
+            <label for="bmi">BMI</label>
+          </div>
+
+          <div class="link">
+            Don’t know your BMI? 👉
+            <a href="{{ url_for('bmi') }}">Calculate here</a>
+          </div>
+
+          <!-- Floating Label Group -->
+          <div class="form-group">
+            <input
+              type="number"
+              name="children"
+              id="children"
+              placeholder=" "
+              required
+            />
+            <label for="children">Children</label>
+          </div>
+
+          <!-- Floating Label Group -->
+          <div class="form-group">
+            <select name="smoker" id="smoker" required>
+              <option value="" disabled selected></option>
+              <option value="yes">Yes</option>
+              <option value="no">No</option>
+            </select>
+            <label for="smoker">Smoker</label>
+          </div>
+
+          <!-- Floating Label Group -->
+          <div class="form-group">
+            <select name="region" id="region" required>
+              <option value="" disabled selected></option>
+              <option value="southwest">Southwest</option>
+              <option value="southeast">Southeast</option>
+              <option value="northwest">Northwest</option>
+              <option value="northeast">Northeast</option>
+            </select>
+            <label for="region">Region</label>
+          </div>
+          <button type="submit">Predict Charges</button>
+        </form>
+
+        <!-- --- Prediction Result Area (MOVED) --- -->
+      </div>
+    </div>
+  </div>
+
+  <!-- New Footer -->
+  <!-- <footer>
+    <p>&copy; 2025 InsurePredict. All rights reserved.</p>
+  </footer> -->
+</body>
+</html>
+
+
+
+
+
+
+
+
